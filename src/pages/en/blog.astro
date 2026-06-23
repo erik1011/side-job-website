@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GradientBg from '../../components/ui/GradientBg.astro';
+import BlogCard from '../../components/blog/BlogCard.astro';
+import { getTranslations } from '../../utils/i18n';
+import { blogPosts } from '../../data/blog-posts';
+
+const lang = 'en';
+const t = getTranslations(lang);
+---
+
+<BaseLayout title={t.blog.title} lang={lang}>
+  <section class="relative pt-32 pb-16 overflow-hidden">
+    <GradientBg />
+    <div class="container-custom relative z-10">
+      <div class="page-hero-content text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">{t.blog.title}</h1>
+        <p class="text-xl text-gray-400">{t.blog.subtitle}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding pt-0">
+    <div class="container-custom">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {blogPosts.map((post) => (
+          <BlogCard post={post} lang={lang} readMore={t.blog.readMore} />
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { initScrollAnimations } from '../../scripts/hero-animation';
+  initScrollAnimations();
+</script>

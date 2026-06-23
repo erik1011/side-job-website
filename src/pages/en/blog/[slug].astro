@@ -1,0 +1,68 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GradientBg from '../../../components/ui/GradientBg.astro';
+import { withBase } from '../../../utils/assets';
+import { getTranslations } from '../../../utils/i18n';
+import { blogPosts, getLocalizedPost } from '../../../data/blog-posts';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const lang = 'en';
+const { post } = Astro.props;
+const t = getTranslations(lang);
+const localized = getLocalizedPost(post, lang);
+---
+
+<BaseLayout title={localized.title} description={localized.excerpt} lang={lang}>
+  <article>
+    <section class="relative pt-32 pb-12 overflow-hidden">
+      <GradientBg />
+      <div class="container-custom relative z-10 max-w-3xl">
+        <a
+          href={getRelativeLocaleUrl(lang, '/blog')}
+          class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-accent-cyan transition-colors mb-8"
+        >
+          ← {t.blog.title}
+        </a>
+        <div class="page-hero-content">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="text-sm text-accent-cyan font-medium">{localized.category}</span>
+            <span class="text-sm text-gray-500">{post.date}</span>
+          </div>
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">{localized.title}</h1>
+          <p class="text-xl text-gray-400 leading-relaxed">{localized.excerpt}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-24">
+      <div class="container-custom max-w-3xl">
+        <div class="aspect-video rounded-2xl overflow-hidden mb-12 glass">
+          <img
+            src={withBase(post.image)}
+            alt=""
+            class="w-full h-full object-cover"
+            width="800"
+            height="450"
+          />
+        </div>
+        <div class="prose prose-invert max-w-none space-y-6">
+          {localized.content.map((paragraph) => (
+            <p class="text-gray-300 text-lg leading-relaxed">{paragraph}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<script>
+  import { initScrollAnimations } from '../../../scripts/hero-animation';
+  initScrollAnimations();
+</script>

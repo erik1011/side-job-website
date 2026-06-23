@@ -1,0 +1,31 @@
+---
+import type { Lang } from '../../i18n/ui';
+import { getTranslations } from '../../utils/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+const stats = Object.values(t.stats);
+---
+
+<section class="section-padding relative">
+  <div class="container-custom">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+      {stats.map((stat) => (
+        <div class="stat-item text-center">
+          <p
+            class="stat-value text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-2"
+            data-value={stat.value}
+            data-suffix={stat.suffix}
+          >
+            0{stat.suffix}
+          </p>
+          <p class="text-gray-400 text-sm md:text-base">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

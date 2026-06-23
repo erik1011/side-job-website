@@ -1,0 +1,35 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { languages, type Lang } from '../i18n/ui';
+import { getLocaleNeutralPath } from '../utils/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const currentPath = getLocaleNeutralPath(Astro.url.pathname);
+---
+
+<div class="flex items-center gap-1 glass rounded-full p-1">
+  <a
+    href={getRelativeLocaleUrl('zh', currentPath)}
+    class:list={[
+      'px-3 py-1 rounded-full text-xs font-medium transition-all',
+      lang === 'zh' ? 'bg-white/15 text-white' : 'text-gray-400 hover:text-white',
+    ]}
+    aria-current={lang === 'zh' ? 'true' : undefined}
+  >
+    {languages.zh}
+  </a>
+  <a
+    href={getRelativeLocaleUrl('en', currentPath)}
+    class:list={[
+      'px-3 py-1 rounded-full text-xs font-medium transition-all',
+      lang === 'en' ? 'bg-white/15 text-white' : 'text-gray-400 hover:text-white',
+    ]}
+    aria-current={lang === 'en' ? 'true' : undefined}
+  >
+    {languages.en}
+  </a>
+</div>

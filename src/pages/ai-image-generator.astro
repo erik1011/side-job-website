@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GradientBg from '../components/ui/GradientBg.astro';
+import Card from '../components/ui/Card.astro';
+import FAQ from '../components/home/FAQ.astro';
+import { getTranslations } from '../utils/i18n';
+
+const lang = 'zh';
+const t = getTranslations(lang);
+---
+
+<BaseLayout title={t.ai.title} lang={lang}>
+  <section class="relative min-h-[70vh] flex items-center pt-20 overflow-hidden">
+    <GradientBg />
+    <div class="container-custom relative z-10">
+      <div class="page-hero-content max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+          {t.ai.hero.title}
+          <span class="gradient-text block">{t.ai.hero.titleHighlight}</span>
+        </h1>
+        <p class="text-xl text-gray-400 mb-8">{t.ai.hero.subtitle}</p>
+        <div class="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto mb-6">
+          <input
+            type="text"
+            placeholder={t.ai.hero.placeholder}
+            class="flex-1 glass rounded-full px-6 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50"
+          />
+          <button class="btn-primary whitespace-nowrap">{t.ai.hero.cta}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container-custom">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">{t.ai.models.title}</h2>
+        <p class="text-gray-400 text-lg">{t.ai.models.subtitle}</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {t.ai.models.items.map((model) => (
+          <Card class="text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-accent-cyan to-accent-purple flex items-center justify-center text-2xl">🎨</div>
+            <h3 class="text-lg font-bold mb-2">{model.name}</h3>
+            <p class="text-gray-400 text-sm mb-4">{model.description}</p>
+            <div class="flex justify-center gap-4 text-xs">
+              <span class="glass rounded-full px-3 py-1">{model.speed}</span>
+              <span class="glass rounded-full px-3 py-1">{model.quality}</span>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-white/5">
+    <div class="container-custom">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">{t.ai.prompts.title}</h2>
+        <p class="text-gray-400 text-lg">{t.ai.prompts.subtitle}</p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+        {t.ai.prompts.items.map((prompt) => (
+          <button class="glass glass-hover rounded-xl p-4 text-left text-sm text-gray-300 hover:text-white transition-colors">
+            "{prompt}"
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <FAQ lang={lang} items={t.ai.faq.items} title={t.ai.faq.title} subtitle="" />
+</BaseLayout>
+
+<script>
+  import { initScrollAnimations } from '../scripts/hero-animation';
+  initScrollAnimations();
+</script>

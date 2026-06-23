@@ -1,0 +1,81 @@
+---
+import Card from '../ui/Card.astro';
+import type { Lang } from '../../i18n/ui';
+import { getTranslations } from '../../utils/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+---
+
+<section class="testimonials-section section-padding relative overflow-hidden">
+  <div class="container-custom">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{t.testimonials.title}</h2>
+      <p class="text-gray-400 text-lg">{t.testimonials.subtitle}</p>
+    </div>
+
+    <!-- Desktop grid -->
+    <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {t.testimonials.items.map((item) => (
+        <Card class="testimonial-card">
+          <div class="flex gap-1 mb-4">
+            {Array.from({ length: item.rating }).map(() => (
+              <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"{item.content}"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent-cyan to-accent-purple flex items-center justify-center text-sm font-bold">
+              {item.name[0]}
+            </div>
+            <div>
+              <p class="text-white font-medium text-sm">{item.name}</p>
+              <p class="text-gray-500 text-xs">{item.role}</p>
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+
+    <!-- Mobile carousel -->
+    <div class="md:hidden relative min-h-[280px]">
+      {t.testimonials.items.map((item, i) => (
+        <Card class="testimonial-card" style={i > 0 ? 'opacity: 0; position: absolute; top: 0; left: 0; right: 0;' : ''}>
+          <div class="flex gap-1 mb-4">
+            {Array.from({ length: item.rating }).map(() => (
+              <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          <p class="text-gray-300 text-sm leading-relaxed mb-6">"{item.content}"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent-cyan to-accent-purple flex items-center justify-center text-sm font-bold">
+              {item.name[0]}
+            </div>
+            <div>
+              <p class="text-white font-medium text-sm">{item.name}</p>
+              <p class="text-gray-500 text-xs">{item.role}</p>
+            </div>
+          </div>
+        </Card>
+      ))}
+      <div class="flex justify-center gap-2 mt-6">
+        {t.testimonials.items.map((_, i) => (
+          <button class="carousel-dot w-2 h-2 rounded-full bg-white/30 hover:bg-accent-cyan transition-colors" aria-label={`Slide ${i + 1}`}></button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initTestimonialCarousel } from '../../scripts/hero-animation';
+  if (window.innerWidth < 768) initTestimonialCarousel();
+</script>

@@ -1,0 +1,48 @@
+---
+import Card from '../ui/Card.astro';
+import type { Lang } from '../../i18n/ui';
+import { getTranslations } from '../../utils/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+const icons = ['🎨', '🤖', '✨', '🖼️'];
+---
+
+<section id="features" class="section-padding relative">
+  <div class="container-custom">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{t.features.title}</h2>
+      <p class="text-gray-400 text-lg max-w-2xl mx-auto">{t.features.subtitle}</p>
+    </div>
+
+    <div class="space-y-12">
+      {t.features.items.map((feature, i) => (
+        <div class:list={['feature-item grid md:grid-cols-2 gap-8 items-center', i % 2 === 1 && 'md:[direction:rtl]']}>
+          <div class:list={['md:[direction:ltr]']}>
+            <Card class="aspect-video flex items-center justify-center">
+              <div class="text-center p-8">
+                <span class="text-6xl mb-4 block">{icons[i]}</span>
+                <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div class="h-full w-3/4 bg-gradient-to-r from-accent-cyan to-accent-purple rounded-full"></div>
+                </div>
+              </div>
+            </Card>
+          </div>
+          <div class:list={['md:[direction:ltr]']}>
+            <h3 class="text-2xl md:text-3xl font-bold mb-4">{feature.title}</h3>
+            <p class="text-gray-400 mb-6 leading-relaxed">{feature.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {feature.highlights.map((h) => (
+                <span class="glass rounded-full px-4 py-1.5 text-sm text-gray-300">{h}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

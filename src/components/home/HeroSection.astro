@@ -1,0 +1,82 @@
+---
+import GradientBg from '../ui/GradientBg.astro';
+import { withBase } from '../../utils/assets';
+import type { Lang } from '../../i18n/ui';
+import { getTranslations } from '../../utils/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getTranslations(lang);
+---
+
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+  <GradientBg />
+
+  <div class="container-custom relative z-10">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="hero-content">
+        <div class="hero-badge inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-6">
+          <span class="w-2 h-2 rounded-full bg-accent-cyan animate-pulse"></span>
+          <span class="text-sm text-gray-300">{t.hero.badge}</span>
+        </div>
+
+        <h1 class="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+          <span class="hero-title-line block">{t.hero.title}</span>
+          <span class="hero-title-highlight block gradient-text">{t.hero.titleHighlight}</span>
+        </h1>
+
+        <p class="hero-subtitle text-lg md:text-xl text-gray-400 max-w-xl mb-8 leading-relaxed">
+          {t.hero.subtitle}
+        </p>
+
+        <div class="hero-cta flex flex-wrap gap-4">
+          <a href="#" class="btn-primary hero-cta-primary">{t.hero.cta}</a>
+          <a href="#features" class="btn-secondary hero-cta-secondary">{t.hero.ctaSecondary}</a>
+        </div>
+      </div>
+
+      <div class="hero-visual relative hidden lg:block">
+        <div class="relative">
+          <div class="absolute inset-0 bg-gradient-to-r from-accent-cyan/20 to-accent-purple/20 rounded-3xl blur-3xl"></div>
+          <div class="relative glass rounded-3xl p-2 gradient-border">
+            <img
+              src={withBase('images/hero-showcase.svg')}
+              alt="PhotoStudio app showcase"
+              class="w-full rounded-2xl"
+              width="600"
+              height="450"
+            />
+          </div>
+          <!-- Floating cards -->
+          <div class="hero-float-card absolute -top-4 -right-4 glass rounded-xl p-3 shadow-xl">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-cyan to-accent-purple flex items-center justify-center text-xs">AI</div>
+              <div>
+                <p class="text-xs text-gray-400">AI Processing</p>
+                <p class="text-sm font-semibold text-white">98% Complete</p>
+              </div>
+            </div>
+          </div>
+          <div class="hero-float-card absolute -bottom-4 -left-4 glass rounded-xl p-3 shadow-xl">
+            <div class="flex items-center gap-2">
+              <div class="flex -space-x-2">
+                <div class="w-6 h-6 rounded-full bg-accent-cyan/30 border border-white/20"></div>
+                <div class="w-6 h-6 rounded-full bg-accent-purple/30 border border-white/20"></div>
+                <div class="w-6 h-6 rounded-full bg-white/20 border border-white/20"></div>
+              </div>
+              <p class="text-sm text-gray-300">10M+ {lang === 'zh' ? '用户' : 'Users'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initHeroAnimation } from '../../scripts/hero-animation';
+  initHeroAnimation();
+</script>

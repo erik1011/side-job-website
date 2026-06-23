@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/home/HeroSection.astro';
+import StatsSection from '../components/home/StatsSection.astro';
+import FeatureShowcase from '../components/home/FeatureShowcase.astro';
+import Testimonials from '../components/home/Testimonials.astro';
+import FAQ from '../components/home/FAQ.astro';
+import CTASection from '../components/home/CTASection.astro';
+import { getTranslations } from '../utils/i18n';
+
+const lang = 'zh';
+const t = getTranslations(lang);
+---
+
+<BaseLayout title={t.nav.home} lang={lang}>
+  <HeroSection lang={lang} />
+  <StatsSection lang={lang} />
+  <FeatureShowcase lang={lang} />
+  <Testimonials lang={lang} />
+  <FAQ lang={lang} />
+  <CTASection lang={lang} />
+</BaseLayout>
+
+<script>
+  import { initScrollAnimations } from '../scripts/hero-animation';
+  initScrollAnimations();
+</script>
