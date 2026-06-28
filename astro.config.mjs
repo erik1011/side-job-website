@@ -4,8 +4,8 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://your-username.github.io',
-  base: '/official-website',
+  site: 'https://iwdw2019.net',
+  base: '/side-job-website',
   output: 'static',
   integrations: [tailwind()],
   i18n: {
